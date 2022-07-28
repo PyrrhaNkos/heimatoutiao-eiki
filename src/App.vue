@@ -1,9 +1,10 @@
 <template>
     <div> 
-      黑马头条
+      <router-view></router-view>
     </div>
 </template>
 <script>
+
 export default {
    name: ''
    ,
@@ -17,6 +18,7 @@ export default {
    },
    methods:{
    },
+
 }
 </script>
 <style lang='' scoped> 
