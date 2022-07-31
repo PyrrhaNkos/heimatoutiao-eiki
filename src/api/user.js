@@ -13,11 +13,11 @@ export const loginApi = (data) =>
     data
   })
 
-  /**
-   * 
-   * @param {String} mobile 手机号
-   * @returns Promise
-   */
+/**
+ *
+ * @param {String} mobile 手机号
+ * @returns Promise
+ */
 export const getCodeApi = (mobile) =>
   request({
     url: `/v1_0/sms/codes/${mobile}`
