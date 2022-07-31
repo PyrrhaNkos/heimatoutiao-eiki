@@ -1,26 +1,17 @@
 <template>
-    <div> 
-      <router-view></router-view>
-    </div>
+  <div>
+    <router-view></router-view>
+  </div>
 </template>
 <script>
-
 export default {
-   name: ''
-   ,
-   data() {
-      return {
-      }
-   },
-   components:{
-   },
-   computed:{
-   },
-   methods:{
-      
-   },
-
+  name: '',
+  data() {
+    return {}
+  },
+  components: {},
+  computed: {},
+  methods: {}
 }
 </script>
-<style lang='' scoped> 
-</style>
+<style lang="" scoped></style>
