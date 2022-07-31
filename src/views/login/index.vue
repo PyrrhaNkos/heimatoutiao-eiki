@@ -82,7 +82,7 @@ export default {
         } = await loginApi(values)
         // console.log(res) //res是axios封装的对象（存着服务端返回的数据），同时也是promise的resolve的值
         this.$store.commit('SET_TOKEN', token)
-        this.$router.push('/profile')
+        this.$router.push('/my')
         this.$toast.success('登录成功')
       } catch (error) {
         // error同上， 是promise的reject的值
