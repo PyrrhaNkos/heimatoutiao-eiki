@@ -44,6 +44,8 @@ export default {
 </script>
 <style lang="less" scoped>
 .navbar {
+  position: sticky;
+  top: 0;
   background-color: #3296fa;
   :deep(.van-nav-bar__title) {
     max-width: unset;
@@ -66,6 +68,9 @@ export default {
 }
 /* tabs导航条样式 */
 :deep(.van-tabs__wrap) {
+  position: sticky;
+  top: 92px;
+  z-index: 9999;
   padding-right: 66px;
 
   .van-tabs__nav {
@@ -99,8 +104,11 @@ export default {
   font-size: 40px;
   line-height: 82px;
   text-align: center;
-  opacity: 0.6;
+  // opacity: 0.6;
   border-bottom: 1px solid #eee;
+  position: fixed;
+  top: 92px;
+  background-color: #fff;
 
   &::after {
     content: '';
@@ -113,8 +121,11 @@ export default {
     background-image: url('~@/assets/images/gradient-gray-line.png');
   }
 }
-.van-tab__pane {
+
+:deep(.van-tabs__content) {
   // 符号的两侧必须由空格
-  min-height: calc(100vh - 92px - 88px - 100px);
+  max-height: calc(100vh - 92px - 88px - 100px);
+  padding-bottom: 100px;
+  overflow: auto;
 }
 </style>
