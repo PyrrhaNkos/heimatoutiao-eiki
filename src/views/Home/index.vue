@@ -24,12 +24,19 @@
         :myChannels="myChannels"
         @change-active="active = $event"
         @del-channel="delChannel"
+        @add-channel="addChannel"
       ></channel-popup>
     </van-popup>
   </div>
 </template>
 <script>
-import { getMyChannel as getMyChannelApi, delChannel } from '@/api'
+import {
+  getMyChannel as getMyChannelApi,
+  delChannel,
+  addChannel,
+  setMyChannelsTolocal,
+  getMyChannelsBylocal
+} from '@/api'
 import ArticleList from './components/ArticleList.vue'
 import ChannelPopup from './components/ChannelPopup.vue'
 export default {
@@ -42,11 +49,32 @@ export default {
     }
   },
   created() {
-    this.getMyChannel()
+    this.initMyChannel()
   },
   components: { ArticleList, ChannelPopup },
-  computed: {},
+  computed: {
+    isLogin() {
+      return !!this.$store.state.tokenObj.token
+    }
+  },
   methods: {
+    // 初始化我的频道
+    initMyChannel() {
+      // 用户登录了
+      if (this.isLogin) {
+        // -发送请求获取线上频道
+        this.getMyChannel()
+      } else {
+        //  用户未登录
+        if (getMyChannelsBylocal()) {
+          // -本地有数据，读取本地
+          this.myChannels = getMyChannelsBylocal()
+        } else {
+          // -本地无数据，重新发请求获取默认频道
+          this.getMyChannel()
+        }
+      }
+    },
     async getMyChannel() {
       try {
         const res = await getMyChannelApi()
@@ -56,11 +84,47 @@ export default {
         this.$toast.fail('获取频道失败，请刷新')
       }
     },
+    // 删除频道
     async delChannel(id) {
-      await delChannel(id)
-      this.myChannels = this.myChannels.filter((item) => {
-        return item.id !== id
+      this.$toast.loading({
+        message: '正在删除频道...',
+        forbidClick: true
       })
+      try {
+        const newChannels = this.myChannels.filter((item) => {
+          return item.id !== id
+        })
+        if (this.isLogin) {
+          await delChannel(id)
+        } else {
+          setMyChannelsTolocal(newChannels)
+        }
+        this.myChannels = newChannels
+        this.$toast.success('删除成功')
+      } catch (error) {
+        this.$toast.fail('删除失败')
+      }
+    },
+    // 添加频道
+    async addChannel(channel) {
+      this.$toast.loading({
+        message: '正在添加频道...',
+        forbidClick: true
+      })
+      try {
+        if (this.isLogin) {
+          // 线上添加
+          await addChannel(channel.id, this.myChannels.length)
+        } else {
+          setMyChannelsTolocal([...this.myChannels, channel])
+        }
+
+        // 视图更新
+        this.myChannels.push(channel)
+        this.$toast.success('添加成功')
+      } catch (error) {
+        this.$toast.fail('添加失败')
+      }
     }
   }
 }

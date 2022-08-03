@@ -33,6 +33,7 @@
         :text="item.name"
         icon="plus"
         class="recommend-item"
+        @click="$emit('add-channel', item)"
       />
     </van-grid>
   </div>
