@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    
+</body>
+<script>
+let arr1 = [1,2,3,4,5,6,7,8,9]
+let arr2 = [1,2,3,4]
+// 补集
+const complement = (a,b)=>{
+   return a.reduce((newArr,aItem)=>{
+       const res = b.find(bItem => bItem === aItem)
+       if(!res){
+        newArr.push(aItem)
+       } 
+       return newArr
+    },[])
+}
+console.log(complement(arr1,arr2));
+
+// 交集
+const intersection = (a,b)=>{
+    return a.filter(aItem=> b.find(bItem=>bItem === aItem))
+}
+console.log(intersection(arr1,arr2));
+
+// 并集
+const union = (a,b)=>{
+   return Array.from(new Set([...a,...b]))
+}
+console.log(union(arr1,arr2));
+</script>
+</html>

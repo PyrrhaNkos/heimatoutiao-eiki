@@ -20,12 +20,16 @@
       closeable
       close-icon-position="top-left"
     >
-      <channel-popup></channel-popup>
+      <channel-popup
+        :myChannels="myChannels"
+        @change-active="active = $event"
+        @del-channel="delChannel"
+      ></channel-popup>
     </van-popup>
   </div>
 </template>
 <script>
-import { getMyChannel as getMyChannelApi } from '@/api'
+import { getMyChannel as getMyChannelApi, delChannel } from '@/api'
 import ArticleList from './components/ArticleList.vue'
 import ChannelPopup from './components/ChannelPopup.vue'
 export default {
@@ -51,6 +55,12 @@ export default {
         console.dir(error)
         this.$toast.fail('获取频道失败，请刷新')
       }
+    },
+    async delChannel(id) {
+      await delChannel(id)
+      this.myChannels = this.myChannels.filter((item) => {
+        return item.id !== id
+      })
     }
   }
 }
