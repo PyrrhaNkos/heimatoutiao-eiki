@@ -55,7 +55,7 @@ export default {
       try {
         const { data } = await getArticleApi(this.id, +new Date())
         this.articleList = data.data.results
-        console.log(data)
+        // console.log(data)
         // 保存下一页的时间戳
         this.pre_timestamp = data.data.pre_timestamp
       } catch (error) {

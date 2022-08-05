@@ -1,10 +1,18 @@
 <template>
   <div>
+    <!-- 头部搜索 -->
     <van-nav-bar class="navbar">
       <template #title>
-        <van-button round class="search-btn" icon="search">搜索</van-button>
+        <van-button
+          round
+          class="search-btn"
+          icon="search"
+          @click="$router.push('/search')"
+          >搜索</van-button
+        >
       </template>
     </van-nav-bar>
+    <!-- 频道导航栏 -->
     <van-tabs v-model="active" swipeable>
       <van-tab :title="item.name" v-for="item in myChannels" :key="item.id">
         <ArticleList :id="item.id"></ArticleList>
