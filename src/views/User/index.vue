@@ -17,6 +17,42 @@
         @change="selectPhoto"
       />
     </van-cell>
+    <!-- 昵称 -->
+    <van-cell title="昵称" :value="userInfo.name" @click="selectNickname">
+    </van-cell>
+    <van-popup
+      v-model="showNickname"
+      position="bottom"
+      :style="{ height: '100%' }"
+    >
+      <UpdateNickname></UpdateNickname>
+    </van-popup>
+
+    <!-- 性别 -->
+    <van-cell
+      title="性别"
+      :value="userInfo.gender === 1 ? '女' : '男'"
+      @click="selectGender"
+    >
+    </van-cell>
+    <van-popup
+      v-model="showGender"
+      position="bottom"
+      :style="{ height: '40%' }"
+    >
+      <UpdateSex></UpdateSex>
+    </van-popup>
+
+    <!-- 生日 -->
+    <van-cell title="生日" :value="userInfo.birthday" @click="selectBirthday">
+    </van-cell>
+    <van-popup
+      v-model="showBirthday"
+      position="bottom"
+      :style="{ height: '40%' }"
+    >
+      <UpdateBirthday></UpdateBirthday>
+    </van-popup>
 
     <!-- 图片弹层 -->
     <van-popup
@@ -28,7 +64,6 @@
       <update-avator
         :photoUrl="photoUrl"
         v-if="isShowAvator"
-        -
         @upload-avator="userInfo.photo = $event"
       ></update-avator>
     </van-popup>
@@ -38,17 +73,22 @@
 import { getUserInfo } from '@/api'
 import { resolveToBase64 } from '@/utils/index'
 import UpdateAvator from './conponents/UpdateAvator'
-
+import UpdateNickname from './conponents/UpdateNickname.vue'
+import UpdateSex from './conponents/UpdateSex.vue'
+import UpdateBirthday from './conponents/UpdateBirthday.vue'
 export default {
   name: '',
   data() {
     return {
       userInfo: {},
       isShowAvator: false,
-      photoUrl: ''
+      photoUrl: '',
+      showNickname: false,
+      showGender: false,
+      showBirthday: false
     }
   },
-  components: { UpdateAvator },
+  components: { UpdateAvator, UpdateNickname, UpdateSex, UpdateBirthday },
   computed: {},
   created() {
     this.getUserInfo()
@@ -59,8 +99,10 @@ export default {
       try {
         const { data } = await getUserInfo()
         this.userInfo = data.data
+        this.$store.commit('SET_USERINFO', data.data)
         console.log(data)
       } catch (error) {
+        console.log(error)
         this.$toast.fail('获取用户信息失败，请刷新')
       }
     },
@@ -114,6 +156,15 @@ export default {
       e.target.value = ''
 
       this.isShowAvator = true
+    },
+    selectNickname() {
+      this.showNickname = true
+    },
+    selectGender() {
+      this.showGender = true
+    },
+    selectBirthday() {
+      this.showBirthday = true
     }
   }
 }

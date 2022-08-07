@@ -2,7 +2,7 @@
   <div>
     <!-- 登录页面 -->
     <!-- 头部区域 -->
-    <van-nav-bar title="登录" />
+    <van-nav-bar title="登录" left-arrow @click-left="$router.back()" />
 
     <!-- 用户名密码 -->
     <van-form @submit="onSubmit" class="from" ref="from">

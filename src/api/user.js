@@ -48,3 +48,10 @@ export const uploadAvator = (file) => {
     data: fm
   })
 }
+
+export const uploadProfile = (data) =>
+  request({
+    url: '/v1_0/user/profile',
+    method: 'PATCH',
+    data
+  })
