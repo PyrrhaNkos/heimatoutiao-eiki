@@ -1,6 +1,8 @@
 <template>
   <div>
-    <router-view></router-view>
+    <transition name="bounce">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 <script>
@@ -14,4 +16,17 @@ export default {
   methods: {}
 }
 </script>
-<style lang="" scoped></style>
+<style lang="less" scoped>
+.bounce-enter-active {
+  animation: bounce-in 1s;
+}
+@keyframes bounce-in {
+  0% {
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(0px, 0, 0);
+  }
+}
+</style>

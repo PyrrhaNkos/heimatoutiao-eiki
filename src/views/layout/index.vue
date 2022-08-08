@@ -1,6 +1,8 @@
 <template>
   <div>
-    <router-view></router-view>
+    <transition name="bounce">
+      <router-view></router-view>
+    </transition>
     <van-tabbar class="footer-content" route>
       <van-tabbar-item
         v-for="(item, index) in tabbarData"
@@ -61,6 +63,18 @@ export default {
   }
   .toutiao {
     font-size: 40px;
+  }
+}
+.bounce-enter-active {
+  animation: bounce-in 1s;
+}
+@keyframes bounce-in {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(0px);
   }
 }
 </style>

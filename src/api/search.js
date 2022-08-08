@@ -13,3 +13,14 @@ export const getSuggestionsApi = (q) => {
     }
   })
 }
+
+/**
+ * 获取搜索结果
+ * @param {*} params 请求参数 页数/偏移量/关键词
+ * @returns Promise
+ */
+export const getSearchResApi = (params) =>
+  request({
+    url: '/v1_0/search',
+    params
+  })

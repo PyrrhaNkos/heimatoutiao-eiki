@@ -16,19 +16,27 @@
     <search-suggestion></search-suggestion>
     <search-results></search-results> -->
     <!-- 动态组件实现多个组件的条件渲染 -->
-    <component :is="componentName" :keywords="keywords"></component>
+    <component
+      :is="componentName"
+      :keywords="keywords"
+      :keywordsList="keywordsList"
+      @delKeywords="delKeywords"
+      @delAll="delAll"
+    ></component>
   </div>
 </template>
 <script>
 import SearchHistory from './components/SearchHistory'
 import SearchResults from './components/SearchResults'
 import SearchSuggestion from './components/SearchSuggestion'
+import { getHistory, setHistory } from '@/utils/auth'
 export default {
   name: '',
   data() {
     return {
       keywords: '',
-      isShowResults: false // 设置一个变量，储存是否进入搜索结果展示
+      isShowResults: false, // 设置一个变量，储存是否进入搜索结果展示
+      keywordsList: getHistory() || []
     }
   },
   components: { SearchHistory, SearchResults, SearchSuggestion },
@@ -51,12 +59,28 @@ export default {
       console.log('正在搜索')
       // 用户搜索了，改为true，显示搜索结果
       this.isShowResults = true
+      const index = this.keywordsList.indexOf(this.keywords)
+      if (index === -1) {
+        this.keywordsList.unshift(this.keywords)
+        setHistory(this.keywordsList)
+        return
+      }
+      this.keywordsList.splice(index, 1)
+      this.keywordsList.unshift(this.keywords)
+      setHistory(this.keywordsList)
     },
     onSearchFocus() {
-      console.log(1)
       // 如果keywords为'' 显示搜索历史
       // 如果keywords存值 显示搜索建议
       this.isShowResults = false // 利用计算属性依赖值变化则重新计算的特性
+    },
+    delKeywords(index) {
+      this.keywordsList.splice(index, 1)
+      setHistory(this.keywordsList)
+    },
+    delAll() {
+      this.keywordsList = []
+      setHistory(this.keywordsList)
     }
   }
 }

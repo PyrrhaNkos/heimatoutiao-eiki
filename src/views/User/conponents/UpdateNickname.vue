@@ -39,7 +39,7 @@ export default {
       this.nickName = this.$store.state.userInfo.name
     },
     async onClickRight() {
-      console.log(this.$refs.username) // 只能分别存用户信息了//坚持用v-model
+      console.log(this.$refs.username)
       this.$toast.loading({
         message: '正在修改昵称',
         forbidClick: true

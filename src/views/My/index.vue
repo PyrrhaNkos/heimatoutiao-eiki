@@ -111,7 +111,18 @@ export default {
   },
   methods: {
     logOut() {
-      this.$store.commit('SET_TOKEN', {})
+      this.$dialog
+        .confirm({
+          title: '黑马头条',
+          message: '是否退出该账户'
+        })
+        .then(() => {
+          this.$store.commit('SET_TOKEN', {})
+          // on confirm
+        })
+        .catch(() => {
+          // on cancel
+        })
     },
     async getUserInfo() {
       try {
