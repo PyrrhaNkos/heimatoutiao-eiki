@@ -22,6 +22,7 @@
       :keywordsList="keywordsList"
       @delKeywords="delKeywords"
       @delAll="delAll"
+      @onSearch="onSearch"
     ></component>
   </div>
 </template>
@@ -55,8 +56,9 @@ export default {
     }
   },
   methods: {
-    onSearch() {
+    onSearch(key) {
       console.log('正在搜索')
+      this.keywords = key
       // 用户搜索了，改为true，显示搜索结果
       this.isShowResults = true
       const index = this.keywordsList.indexOf(this.keywords)

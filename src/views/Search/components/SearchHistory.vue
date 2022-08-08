@@ -7,7 +7,12 @@
         <span @click="isDel = false">完成</span>
       </div>
     </van-cell>
-    <van-cell :title="item" v-for="(item, index) in keywordsList" :key="index">
+    <van-cell
+      :title="item"
+      v-for="(item, index) in keywordsList"
+      :key="index"
+      @click="onSearch(item)"
+    >
       <van-icon name="close" v-if="isDel" @click="delKeywords(index)" />
     </van-cell>
   </div>
@@ -35,6 +40,9 @@ export default {
     },
     delAll() {
       this.$emit('delAll')
+    },
+    onSearch(key) {
+      this.$emit('onSearch', key)
     }
   }
 }
