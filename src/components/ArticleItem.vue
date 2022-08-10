@@ -4,6 +4,7 @@
     :title="articleInfo.title"
     :label="label"
     v-if="articleInfo.cover.type === 0"
+    @click="toArticleDetail(articleInfo.art_id)"
   />
   <!-- 1张图片结构 -->
   <van-cell
@@ -11,11 +12,18 @@
     value="内容"
     :label="label"
     v-else-if="articleInfo.cover.type === 1"
+    @click="toArticleDetail(articleInfo.art_id)"
   >
     <van-image width="100" height="100" :src="articleInfo.cover.images[0]" />
   </van-cell>
   <!-- 3张图片结构 -->
-  <van-cell :title="articleInfo.title" value="内容" :label="label" v-else>
+  <van-cell
+    :title="articleInfo.title"
+    value="内容"
+    :label="label"
+    v-else
+    @click="toArticleDetail(articleInfo.art_id)"
+  >
     <van-image
       width="100"
       height="100"
@@ -44,7 +52,14 @@ export default {
       return `${art.aut_name} ${art.comm_count}评论 ${art.pubdate}`
     }
   },
-  methods: {}
+  methods: {
+    toArticleDetail(id) {
+      this.$router.push({
+        path: '/detail',
+        query: { id }
+      })
+    }
+  }
 }
 </script>
 <style lang="" scoped></style>

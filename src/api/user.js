@@ -55,3 +55,28 @@ export const uploadProfile = (data) =>
     method: 'PATCH',
     data
   })
+
+/**
+ * 关注用户
+ * @param {*} id 用户id
+ * @returns promise
+ */
+export const addFollowApi = (id) =>
+  request({
+    url: '/v1_0/user/followings',
+    method: 'POST',
+    data: {
+      target: id
+    }
+  })
+
+/**
+ * 取消关注
+ * @param {*} id 用户id
+ * @returns Promise
+ */
+export const cancelFollowApi = (id) =>
+  request({
+    url: `/v1_0/user/followings/${id}`,
+    method: 'DELETE'
+  })

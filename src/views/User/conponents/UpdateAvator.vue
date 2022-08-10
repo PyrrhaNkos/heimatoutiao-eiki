@@ -49,6 +49,7 @@ export default {
           message: '图片正在上传',
           forbidClick: true
         })
+        console.log(blob)
         try {
           const { data } = await uploadAvator(blob)
           // 更改父组件的头像
