@@ -15,8 +15,12 @@
     <div slot="label">
       <p class="comment-content">{{ comment.content }}</p>
       <div class="bottom-info">
-        <span class="comment-pubdate">{{ comment.pubdate }}</span>
-        <van-button class="reply-btn" round @click="toCommentPage(comment)"
+        <span class="comment-pubdate">{{ comment.pubdate | formata }}</span>
+        <van-button
+          class="reply-btn"
+          round
+          @click="toCommentPage(comment)"
+          :disabled="showCommentPage"
           >回复 {{ comment.reply_count }}</van-button
         >
       </div>
@@ -30,6 +34,9 @@ export default {
     comment: {
       type: Object,
       default: () => ({})
+    },
+    showCommentPage: {
+      type: Boolean
     }
   },
   data() {

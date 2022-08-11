@@ -34,24 +34,34 @@ export default {
   computed: {},
   methods: {
     async sendComment() {
-      if (this.id.length <= 4) {
-        const { data } = await postCommentsApi({
-          target: this.id,
-          content: this.message
+      try {
+        this.$toast.loading({
+          message: '正在发布评论',
+          forbidClick: true
         })
-        const item = data.data.new_obj
-        this.$emit('addComment', item)
+        if (this.id.length <= 4) {
+          const { data } = await postCommentsApi({
+            target: this.id, // 文章ID
+            content: this.message
+          })
+          const item = data.data.new_obj
+          this.$emit('addComment', item)
+        } else {
+          const { data } = await postCommentsApi({
+            target: this.id, // 评论ID
+            content: this.message,
+            art_id: this.art_id // 文章ID
+          })
+          const item = data.data.new_obj
+          this.$emit('addCommentPage')
+          this.$bus.$emit('addReplyCount', this.id)
+          this.$bus.$emit('addCommentList', item)
+        }
+        this.message = ''
+        this.$toast.success('评论成功')
+      } catch (error) {
+        this.$toast.fail('评论失败，请刷新后重试')
       }
-      const { data } = await postCommentsApi({
-        target: this.id,
-        content: this.message,
-        art_id: this.art_id
-      })
-      const item = data.data.new_obj
-      this.$emit('addCommentPage')
-      this.$bus.$emit('addReplyCount', this.id)
-      this.$bus.$emit('addCommentList', item)
-      this.message = ''
     }
   }
 }

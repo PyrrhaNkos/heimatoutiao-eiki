@@ -4,6 +4,7 @@
       v-for="(item, index) in commentList"
       :key="index"
       :comment="item"
+      :showCommentPage="showCommentPage"
     ></CommentItem>
   </div>
 </template>
@@ -15,6 +16,9 @@ export default {
     commentList: {
       type: Array,
       default: () => []
+    },
+    showCommentPage: {
+      type: Boolean
     }
   },
   data() {

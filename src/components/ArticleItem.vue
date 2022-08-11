@@ -2,28 +2,41 @@
   <!-- 无图片结构 -->
   <van-cell
     :title="articleInfo.title"
-    :label="label"
     v-if="articleInfo.cover.type === 0"
     @click="toArticleDetail(articleInfo.art_id)"
-  />
+  >
+    <template #label>
+      <span> {{ articleInfo.aut_name }} </span>
+      <span> {{ articleInfo.comm_count }} 评论</span>
+      <span> {{ articleInfo.pubdate | formata }} </span>
+    </template>
+  </van-cell>
   <!-- 1张图片结构 -->
   <van-cell
     :title="articleInfo.title"
     value="内容"
-    :label="label"
     v-else-if="articleInfo.cover.type === 1"
     @click="toArticleDetail(articleInfo.art_id)"
   >
+    <template #label>
+      <span> {{ articleInfo.aut_name }} </span>
+      <span> {{ articleInfo.comm_count }} 评论</span>
+      <span> {{ articleInfo.pubdate | formata }} </span>
+    </template>
     <van-image width="100" height="100" :src="articleInfo.cover.images[0]" />
   </van-cell>
   <!-- 3张图片结构 -->
   <van-cell
     :title="articleInfo.title"
     value="内容"
-    :label="label"
     v-else
     @click="toArticleDetail(articleInfo.art_id)"
   >
+    <template #label>
+      <span> {{ articleInfo.aut_name }} </span>
+      <span> {{ articleInfo.comm_count }} 评论</span>
+      <span> {{ articleInfo.pubdate | formata }} </span>
+    </template>
     <van-image
       width="100"
       height="100"
@@ -46,12 +59,6 @@ export default {
     return {}
   },
   components: {},
-  computed: {
-    label() {
-      const art = this.articleInfo
-      return `${art.aut_name} ${art.comm_count}评论 ${art.pubdate}`
-    }
-  },
   methods: {
     toArticleDetail(id) {
       this.$router.push({

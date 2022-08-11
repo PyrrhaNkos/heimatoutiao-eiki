@@ -111,6 +111,7 @@
           :id="comId"
           :art_id="id"
           :commentItem="commentItem"
+          :showCommentPage="showCommentPage"
         ></CommentPage>
       </van-popup>
     </div>
@@ -138,19 +139,19 @@ export default {
       comId: '', // 评论ID
       commentItem: {}, // 当前进入的评论项
       id: this.$route.query.id, // 文章id
-      articleInfo: {},
+      articleInfo: {}, // 文章信息
       followLoding: false,
       showAddComment: false,
-      typeA: 'a', // 文章评论
+      typeA: 'a', // 文章评论type
       articleCommentList: [], // 文章评论列表
       total_count: '',
-      typeC: 'c', // 评论的评论
-      commentList: [],
+      typeC: 'c', // 评论的评论type
+      commentList: [], // 评论的评论列表
       limit: 5,
       loading: false,
       finished: false,
       error: false,
-      showCommentPage: false
+      showCommentPage: false // 二级评论页弹层
     }
   },
   components: { AddComment, CommentList, CommentPage },
@@ -167,7 +168,8 @@ export default {
       console.log(item.com_id)
       const { data } = await getArticleCommentsApi({
         type: this.typeC,
-        source: item.com_id
+        source: item.com_id,
+        limit: 3
       })
       console.log(data)
       this.commentList = data.data.results
